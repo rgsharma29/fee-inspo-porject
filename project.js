@@ -40,10 +40,22 @@ let returnHistory = [
 
 // 3. INITIALIZATION
 window.onload = function() {
+    // 1. Initialize data behind the scenes
     updateDashboard();
     renderBooks(books);
     renderIssuedBooks();
     renderHistory();
+
+    // 2. Manage the loading screen delay (2 seconds)
+    setTimeout(() => {
+        const loadingScreen = document.getElementById('loading-screen');
+        loadingScreen.classList.add('fade-out');
+        
+        // Remove from DOM after fade animation completes to keep memory clean
+        setTimeout(() => {
+            loadingScreen.style.display = 'none';
+        }, 600);
+    }, 2000);
 };
 
 // 4. NAVIGATION LOGIC
