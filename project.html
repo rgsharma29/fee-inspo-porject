@@ -3,385 +3,299 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Side Burn Library | Management Dashboard</title>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>Sideburn | Library Management</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="project.css">
 </head>
 <body>
-    <div class="app-container">
-        <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <i data-lucide="flame" class="logo-icon"></i>
-                <h2>Side Burn<span>Library</span></h2>
-                <button class="close-sidebar" id="closeSidebar"><i data-lucide="x"></i></button>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fa-solid fa-book-open-reader"></i> SIDEBURN
+        </div>
+        <ul class="nav-links">
+            <li class="nav-item active" onclick="navigate('home')">Home</li>
+            <li class="nav-item" onclick="navigate('dashboard')">Dashboard</li>
+            <li class="nav-item" onclick="navigate('library')">Library</li>
+            <li class="nav-item" onclick="navigate('issued')">Issued Books</li>
+            <li class="nav-item" onclick="navigate('history')">Return History</li>
+            <li class="nav-item" onclick="navigate('about')">About</li>
+        </ul>
+        <div class="nav-admin">
+            <div class="admin-avatar">R</div>
+            <div class="admin-info">
+                <span class="admin-name">Raghav</span>
+                <span class="admin-role">Admin</span>
+            </div>
+        </div>
+        <!-- Mobile Menu Toggle -->
+        <div class="mobile-toggle" onclick="toggleMobileMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- Main Content Sections -->
+    <main class="main-content">
+
+        <!-- 1. HOME SECTION -->
+        <section id="section-home" class="section active">
+            <div class="hero">
+                <div class="hero-text">
+                    <div class="badge">🚀 v2.0 Live Now</div>
+                    <h1>Welcome to <span class="gradient-text">Sideburn</span></h1>
+                    <h2>Your library. Your stories. Your knowledge.</h2>
+                    <p>Where every story finds its reader. Manage books, track returns, and explore a modern approach to the library experience.</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" onclick="navigate('library')">Explore Library</button>
+                        <button class="btn btn-secondary" onclick="navigate('dashboard')">Manage Books</button>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="floating-book book-1">
+                        <i class="fa-solid fa-code"></i>
+                        <span>Clean Code</span>
+                    </div>
+                    <div class="floating-book book-2">
+                        <i class="fa-solid fa-heart"></i>
+                        <span>Love Stories</span>
+                    </div>
+                    <div class="floating-book book-3">
+                        <i class="fa-solid fa-user-secret"></i>
+                        <span>Thrillers</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. DASHBOARD SECTION -->
+        <section id="section-dashboard" class="section hidden">
+            <div class="section-header">
+                <h2>Admin <span class="gradient-text">Dashboard</span></h2>
+                <p>Real-time statistics for the Sideburn library.</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon purple"><i class="fa-solid fa-book"></i></div>
+                    <div class="stat-info">
+                        <h3>Total Books</h3>
+                        <p id="stat-total">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green"><i class="fa-solid fa-check-circle"></i></div>
+                    <div class="stat-info">
+                        <h3>Available</h3>
+                        <p id="stat-available">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blue"><i class="fa-solid fa-book-reader"></i></div>
+                    <div class="stat-info">
+                        <h3>Issued Books</h3>
+                        <p id="stat-issued">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon red"><i class="fa-solid fa-exclamation-triangle"></i></div>
+                    <div class="stat-info">
+                        <h3>Overdue</h3>
+                        <p id="stat-overdue">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange"><i class="fa-solid fa-users"></i></div>
+                    <div class="stat-info">
+                        <h3>Total Members</h3>
+                        <p id="stat-members">Unlimited</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. LIBRARY SECTION -->
+        <section id="section-library" class="section hidden">
+            <div class="section-header">
+                <h2>The <span class="gradient-text">Collection</span></h2>
+                <p>Browse, search, and issue books from our digital shelves.</p>
             </div>
             
-            <nav class="sidebar-nav">
-                <a href="#" class="nav-item active" data-target="dashboard">
-                    <i data-lucide="layout-dashboard"></i> Dashboard
-                </a>
-                <a href="#" class="nav-item" data-target="books">
-                    <i data-lucide="book-open"></i> Books
-                </a>
-                <a href="#" class="nav-item" data-target="members">
-                    <i data-lucide="users"></i> Members
-                </a>
-                <a href="#" class="nav-item" data-target="issue-return">
-                    <i data-lucide="arrow-left-right"></i> Issue / Return
-                </a>
-                <a href="#" class="nav-item" data-target="history">
-                    <i data-lucide="history"></i> Borrowing History
-                </a>
-                <a href="#" class="nav-item" data-target="analytics">
-                    <i data-lucide="bar-chart-3"></i> Analytics
-                </a>
-            </nav>
-
-            <div class="sidebar-footer">
-                <div class="admin-profile">
-                    <img src="https://ui-avatars.com/api/?name=Raghav&background=4f46e5&color=fff" alt="Admin Raghav">
-                    <div class="admin-info">
-                        <h4>Raghav</h4>
-                        <p>System Admin</p>
-                    </div>
+            <div class="library-controls">
+                <div class="search-box">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Search books, authors or categories..." onkeyup="searchBooks()">
                 </div>
             </div>
-        </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Top Navbar -->
-            <header class="top-navbar">
-                <div class="nav-left">
-                    <button class="menu-toggle" id="menuToggle"><i data-lucide="menu"></i></button>
-                    <div class="search-bar">
-                        <i data-lucide="search"></i>
-                        <input type="text" id="globalSearch" placeholder="Search books, members, ISBN...">
-                    </div>
-                </div>
-                <div class="nav-right">
-                    <button class="theme-toggle" id="themeToggle"><i data-lucide="moon"></i></button>
-                </div>
-            </header>
+            <div class="category-filters" id="category-filters">
+                <button class="filter-btn active" onclick="filterCategory('All')">All</button>
+                <button class="filter-btn" onclick="filterCategory('❤️ Love')">❤️ Love</button>
+                <button class="filter-btn" onclick="filterCategory('🔪 Thriller')">🔪 Thriller</button>
+                <button class="filter-btn" onclick="filterCategory('💻 Computing')">💻 Computing</button>
+                <button class="filter-btn" onclick="filterCategory('👨‍💻 Coding')">👨‍💻 Coding</button>
+                <button class="filter-btn" onclick="filterCategory('⚔️ Action')">⚔️ Action</button>
+                <button class="filter-btn" onclick="filterCategory('💔 Sad')">💔 Sad</button>
+            </div>
 
-            <!-- Pages Wrapper -->
-            <div class="pages-wrapper">
+            <div class="books-grid" id="books-grid">
+                <!-- Book Cards will be generated here by JavaScript -->
+            </div>
+        </section>
+
+        <!-- 4. ISSUED BOOKS SECTION -->
+        <section id="section-issued" class="seaction hidden">
+            <div class="section-header">
+                <h2>Issued <span class="gradient-text">Books</span></h2>
+                <p>Manage currently borrowed books and calculate fines.</p>
+            </div>
+            <div class="table-container">
+                <table class="modern-table">
+                    <thead>
+                        <tr>
+                            <th>Book Title</th>
+                            <th>Issued To</th>
+                            <th>Issue Date</th>
+                            <th>Due Date</th>
+                            <th>Fine Tracker</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="issued-table-body">
+                        <!-- Issued records generated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 5. RETURN HISTORY SECTION -->
+        <section id="section-history" class="section hidden">
+            <div class="section-header">
+                <h2>Return <span class="gradient-text">History</span></h2>
+                <p>Records of previously returned books and collected fines.</p>
+            </div>
+            <div class="table-container">
+                <table class="modern-table">
+                    <thead>
+                        <tr>
+                            <th>Book Title</th>
+                            <th>Borrower</th>
+                            <th>Issue Date</th>
+                            <th>Return Date</th>
+                            <th>Days Late</th>
+                            <th>Fine Collected</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-table-body">
+                        <!-- History records generated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 6. ABOUT SECTION -->
+        <section id="section-about" class="section hidden">
+            <div class="section-header">
+                <h2>About <span class="gradient-text">Sideburn</span></h2>
+                <p>A modern library management system built with passion.</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Sideburn is a student-created library management system designed to make managing books, borrowers, returns, and fines simple and visually engaging. We abandoned boring tables and plain designs in favor of a creative, Gen-Z oriented aesthetic.</p>
+                    <p class="highlight-text">All team members contributed to the idea and development of this project.</p>
+                </div>
                 
-                <!-- DASHBOARD PAGE -->
-                <section id="dashboard" class="page active">
-                    <div class="page-header">
-                        <div>
-                            <h1>Welcome back, Raghav 👋</h1>
-                            <p class="subtitle">Here's what's happening in Side Burn Library today.</p>
-                        </div>
+                <h3>Meet the Team</h3>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="team-avatar">RS</div>
+                        <h4>Raghav Sharma</h4>
+                        <p>Team Leader</p>
                     </div>
-
-                    <!-- Stats Cards -->
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-icon bg-primary-light"><i data-lucide="book"></i></div>
-                            <div class="stat-details">
-                                <p>Total Books</p>
-                                <h3 id="statTotalBooks">0</h3>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon bg-success-light"><i data-lucide="check-circle"></i></div>
-                            <div class="stat-details">
-                                <p>Available</p>
-                                <h3 id="statAvailable">0</h3>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon bg-warning-light"><i data-lucide="book-open-check"></i></div>
-                            <div class="stat-details">
-                                <p>Issued</p>
-                                <h3 id="statIssued">0</h3>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon bg-danger-light"><i data-lucide="alert-triangle"></i></div>
-                            <div class="stat-details">
-                                <p>Overdue</p>
-                                <h3 id="statOverdue">0</h3>
-                            </div>
-                        </div>
+                    <div class="team-card">
+                        <div class="team-avatar">IS</div>
+                        <h4>Ishan Sharma</h4>
+                        <p>Developer</p>
                     </div>
-
-                    <!-- Dashboard Bottom Grid -->
-                    <div class="dashboard-grid">
-                        <div class="card recent-issues-card">
-                            <div class="card-header">
-                                <h3>Recently Issued</h3>
-                                <button class="btn-text" onclick="app.navigate('history')">View All</button>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table" id="recentIssuesTable">
-                                    <thead>
-                                        <tr>
-                                            <th>Book</th>
-                                            <th>Member</th>
-                                            <th>Issue Date</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody><!-- Populated via JS --></tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="card chart-card">
-                            <div class="card-header">
-                                <h3>Overview</h3>
-                            </div>
-                            <canvas id="dashboardChart"></canvas>
-                        </div>
+                    <div class="team-card">
+                        <div class="team-avatar">RG</div>
+                        <h4>Rajat Gupta</h4>
+                        <p>Developer</p>
                     </div>
-                </section>
-
-                <!-- BOOKS PAGE -->
-                <section id="books" class="page">
-                    <div class="page-header flex-between">
-                        <div>
-                            <h1>Book Management</h1>
-                            <p class="subtitle">Manage library inventory</p>
-                        </div>
-                        <button class="btn btn-primary" onclick="ui.openModal('bookModal')">
-                            <i data-lucide="plus"></i> Add New Book
-                        </button>
+                    <div class="team-card">
+                        <div class="team-avatar">AS</div>
+                        <h4>Aradhya Singh Chauhan</h4>
+                        <p>Designer</p>
                     </div>
-                    
-                    <div class="card">
-                        <div class="table-controls">
-                            <input type="text" id="bookSearch" placeholder="Search books..." class="input-control">
-                            <select id="bookCategoryFilter" class="input-control">
-                                <option value="all">All Categories</option>
-                                <option value="Programming">Programming</option>
-                                <option value="Romance">Romance</option>
-                                <option value="Drama">Emotional / Drama</option>
-                                <option value="Thriller">Spy / Thriller</option>
-                                <option value="Action">Action / Adventure</option>
-                                <option value="Fantasy">Fantasy</option>
-                            </select>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Book Title</th>
-                                        <th>Author</th>
-                                        <th>Category</th>
-                                        <th>Availability</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="booksTableBody"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- MEMBERS PAGE -->
-                <section id="members" class="page">
-                    <div class="page-header flex-between">
-                        <div>
-                            <h1>Members</h1>
-                            <p class="subtitle">Manage students and staff</p>
-                        </div>
-                        <button class="btn btn-primary" onclick="ui.openModal('memberModal')">
-                            <i data-lucide="user-plus"></i> Add Member
-                        </button>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Member Name</th>
-                                        <th>Student ID</th>
-                                        <th>Department</th>
-                                        <th>Active Issues</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="membersTableBody"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ISSUE/RETURN PAGE -->
-                <section id="issue-return" class="page">
-                    <div class="page-header">
-                        <h1>Issue & Return</h1>
-                        <p class="subtitle">Process book transactions</p>
-                    </div>
-
-                    <div class="dashboard-grid">
-                        <div class="card">
-                            <h3>Issue a Book</h3>
-                            <form id="issueForm" class="form-grid mt-4">
-                                <div class="form-group">
-                                    <label>Select Member</label>
-                                    <select id="issueMember" required class="input-control"></select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Select Book</label>
-                                    <select id="issueBook" required class="input-control"></select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Due Date</label>
-                                    <input type="date" id="issueDueDate" required class="input-control">
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100 mt-2">Issue Book</button>
-                            </form>
-                        </div>
-                        <div class="card">
-                            <h3>Active Issues (Pending Return)</h3>
-                            <div class="table-responsive mt-4">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Book</th>
-                                            <th>Member</th>
-                                            <th>Due Date</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="returnTableBody"></tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- HISTORY PAGE -->
-                <section id="history" class="page">
-                    <div class="page-header">
-                        <h1>Borrowing History</h1>
-                        <p class="subtitle">Complete transaction log</p>
-                    </div>
-                    <div class="card">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Tx ID</th>
-                                        <th>Book</th>
-                                        <th>Member</th>
-                                        <th>Issue Date</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="historyTableBody"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ANALYTICS PAGE -->
-                <section id="analytics" class="page">
-                    <div class="page-header">
-                        <h1>Analytics</h1>
-                        <p class="subtitle">Library performance insights</p>
-                    </div>
-                    <div class="dashboard-grid">
-                        <div class="card">
-                            <h3>Borrowing Trends</h3>
-                            <canvas id="trendChart"></canvas>
-                        </div>
-                        <div class="card">
-                            <h3>Category Popularity</h3>
-                            <canvas id="categoryChart"></canvas>
-                        </div>
-                    </div>
-                </section>
-
+                </div>
             </div>
-        </main>
-    </div>
+        </section>
 
-    <!-- MODALS -->
-    <!-- Add Book Modal -->
-    <div class="modal" id="bookModal">
+    </main>
+
+    <!-- ISSUE BOOK MODAL -->
+    <div class="modal-overlay" id="issue-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="bookModalTitle">Add New Book</h3>
-                <button class="close-modal" onclick="ui.closeModal('bookModal')"><i data-lucide="x"></i></button>
+                <h3>Issue Book</h3>
+                <i class="fa-solid fa-times close-modal" onclick="closeModal()"></i>
             </div>
-            <form id="bookForm" class="modal-body form-grid">
-                <input type="hidden" id="bookId">
+            <div class="modal-body">
+                <p id="modal-book-title" class="modal-book-name">Book Title</p>
+                
                 <div class="form-group">
-                    <label>Title</label>
-                    <input type="text" id="bookTitle" required class="input-control">
+                    <label>Enter Borrower Name:</label>
+                    <!-- Using datalist allows typing ANY name, while still giving suggestions -->
+                    <input type="text" id="borrower-name" placeholder="E.g. Aarav Sharma..." list="student-list">
+                    <datalist id="student-list">
+                        <option value="Aarav Sharma">
+                        <option value="Aditya Verma">
+                        <option value="Ananya Singh">
+                        <option value="Rohan Gupta">
+                        <option value="Priya Sharma">
+                        <option value="Arjun Mehta">
+                        <option value="Ishita Kapoor">
+                        <option value="Kunal Yadav">
+                        <option value="Neha Agarwal">
+                        <option value="Rahul Chauhan">
+                    </datalist>
                 </div>
+
                 <div class="form-group">
-                    <label>Author</label>
-                    <input type="text" id="bookAuthor" required class="input-control">
+                    <label>Issue Date:</label>
+                    <input type="date" id="issue-date" readonly>
                 </div>
+
                 <div class="form-group">
-                    <label>ISBN</label>
-                    <input type="text" id="bookIsbn" required class="input-control">
+                    <label>Due Date (14 Days default):</label>
+                    <input type="date" id="due-date" readonly>
                 </div>
-                <div class="form-group">
-                    <label>Category</label>
-                    <select id="bookCategory" required class="input-control">
-                        <option value="Programming">Programming</option>
-                        <option value="Romance">Romance</option>
-                        <option value="Drama">Emotional / Drama</option>
-                        <option value="Thriller">Spy / Thriller</option>
-                        <option value="Action">Action / Adventure</option>
-                        <option value="Fantasy">Fantasy</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Total Copies</label>
-                    <input type="number" id="bookCopies" required min="1" class="input-control">
-                </div>
-                <div class="form-group" style="grid-column: 1 / -1;">
-                    <button type="submit" class="btn btn-primary w-100">Save Book</button>
-                </div>
-            </form>
+                
+                <button class="btn btn-primary full-width" onclick="confirmIssue()">Confirm Issue</button>
+            </div>
         </div>
     </div>
 
-    <!-- Add Member Modal -->
-    <div class="modal" id="memberModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Add New Member</h3>
-                <button class="close-modal" onclick="ui.closeModal('memberModal')"><i data-lucide="x"></i></button>
-            </div>
-            <form id="memberForm" class="modal-body form-grid">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="memberName" required class="input-control">
-                </div>
-                <div class="form-group">
-                    <label>Student ID</label>
-                    <input type="text" id="memberStudentId" required class="input-control">
-                </div>
-                <div class="form-group">
-                    <label>Department</label>
-                    <input type="text" id="memberDept" required class="input-control">
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="memberEmail" required class="input-control">
-                </div>
-                <div class="form-group" style="grid-column: 1 / -1;">
-                    <button type="submit" class="btn btn-primary w-100">Save Member</button>
-                </div>
-            </form>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-brand">
+            <i class="fa-solid fa-book-open-reader"></i> SIDEBURN
         </div>
-    </div>
+        <p>"Where every story finds its reader."</p>
+        <div class="footer-bottom">
+            <span>Library Management System</span>
+            <span>&copy; 2026 Sideburn Library</span>
+            <span>Team Sideburn</span>
+        </div>
+    </footer>
 
+    <!-- JavaScript File -->
     <script src="project.js"></script>
 </body>
 </html>
