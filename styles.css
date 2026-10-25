@@ -1,0 +1,50 @@
+/* Side Burn Library Theme: Light Blue, Warm Beige, and Pastel Pink */
+:root {
+  --bg-beige-main: #F5EFE6;
+  --bg-beige-card: #FDFBF7;
+  --accent-light-blue: #E0F2FE;
+  --accent-blue-border: #7DD3FC;
+  --accent-blue-dark: #0369A1;
+  --accent-pink-soft: #FCE7F3;
+  --accent-pink-border: #F9A8D4;
+  --accent-pink-dark: #BE185D;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-beige-main);
+  color: #1e293b;
+}
+
+.bg-beige-main {
+  background-color: var(--bg-beige-main);
+}
+
+.bg-beige-card {
+  background-color: var(--bg-beige-card);
+}
+
+.theme-gradient-banner {
+  background: linear-gradient(135deg, #e0f2fe 0%, #f5efe6 50%, #fce7f3 100%);
+}
+
+.theme-btn-primary {
+  background: linear-gradient(90deg, #0284c7 0%, #db2777 100%);
+  color: #ffffff;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.theme-btn-primary:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+/* Custom Range Slider Styling */
+input[type='range'] {
+  accent-color: #db2777;
+}
